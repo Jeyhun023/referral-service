@@ -24,6 +24,7 @@ return [
         'cannot_cancel' => 'Referral cannot be cancelled because it is currently :status.',
         'not_found' => 'Referral not found.',
         'unauthorized' => 'Invalid or missing API service token.',
+        'rate_limited' => 'Too many referral submissions. Please try again later.',
     ],
 
     'audit' => [
