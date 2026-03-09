@@ -1,0 +1,62 @@
+services:
+  php:
+    container_name: referral-php
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+    volumes:
+      - .:/var/www/referral
+    working_dir: /var/www/referral
+    depends_on:
+      - mysql
+    restart: unless-stopped
+    networks:
+      - referral-net
+    healthcheck:
+      test: ["CMD", "php-fpm", "-t"]
+      interval: 20s
+      timeout: 20s
+      retries: 20
+      start_period: 15s
+
+  nginx:
+    container_name: referral-nginx
+    build:
+      context: .
+      dockerfile: ./docker/nginx/Dockerfile
+    ports:
+      - 8000:80
+    volumes:
+      - .:/var/www/referral
+    restart: unless-stopped
+    depends_on:
+      php:
+        condition: service_healthy
+    networks:
+      - referral-net
+
+  mysql:
+    container_name: referral-mysql
+    image: mysql:8.0
+    volumes:
+      - referral-data:/var/lib/mysql
+    networks:
+      - referral-net
+    restart: unless-stopped
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_DATABASE=${DB_DATABASE}
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - MYSQL_USER=${DB_USERNAME}
+
+volumes:
+  referral-data:
+    name: referral-data
+    driver: local
+
+networks:
+  referral-net:
+    name: referral-net
+    driver: bridge
