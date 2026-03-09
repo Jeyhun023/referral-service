@@ -112,4 +112,17 @@ return [
 
     'password_timeout' => env('AUTH_PASSWORD_TIMEOUT', 10800),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Service-to-Service Token
+    |--------------------------------------------------------------------------
+    |
+    | Static bearer token used for authenticating internal service-to-service
+    | API requests. Callers must include this token in the Authorization
+    | header as: Authorization: Bearer <token>
+    |
+    */
+
+    'service_token' => env('API_SERVICE_TOKEN', ''),
+
 ];

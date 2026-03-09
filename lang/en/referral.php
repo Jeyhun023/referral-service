@@ -23,6 +23,7 @@ return [
         'cancelled' => 'Referral has been successfully cancelled.',
         'cannot_cancel' => 'Referral cannot be cancelled because it is currently :status.',
         'not_found' => 'Referral not found.',
+        'unauthorized' => 'Invalid or missing API service token.',
     ],
 
     'audit' => [
