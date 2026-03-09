@@ -24,4 +24,16 @@ return [
         'cannot_cancel' => 'Referral cannot be cancelled because it is currently :status.',
         'not_found' => 'Referral not found.',
     ],
+
+    'audit' => [
+        'created' => 'Referral created and queued for triage.',
+        'updated' => 'Referral updated.',
+        'deleted' => 'Referral deleted.',
+        'triage_started' => 'Triage process started.',
+        'triage_accepted' => 'Referral accepted after triage.',
+        'triage_rejected' => 'Referral rejected after triage.',
+        'cancelled' => 'Referral cancelled.',
+        'status_changed' => 'Referral status changed to :status.',
+        'triage_failed' => 'Triage process failed. Referral reset to received status.',
+    ],
 ];

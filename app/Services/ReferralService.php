@@ -6,7 +6,6 @@ use App\Enums\ReferralStatus;
 use App\Events\ReferralCreated;
 use App\Models\Referral;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Facades\Log;
 
 class ReferralService
 {
@@ -16,7 +15,7 @@ class ReferralService
 
         ReferralCreated::dispatch($referral);
 
-        return $referral;
+        return $referral->fresh();
     }
 
     public function find(string $id): Referral

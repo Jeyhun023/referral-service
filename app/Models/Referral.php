@@ -7,10 +7,12 @@ use App\Enums\ReferralStatus;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Referral extends Model
 {
-    use HasFactory, HasUuids;
+    use HasFactory, HasUuids, LogsActivity;
 
     protected $fillable = [
         'patient_first_name',
@@ -43,5 +45,42 @@ class Referral extends Model
     public function isCancellable(): bool
     {
         return $this->status->isCancellable();
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly([
+                'status',
+                'priority',
+                'cancelled_at',
+                'cancellation_reason',
+                'triaged_at',
+            ])
+            ->logOnlyDirty()
+            ->useLogName('referral')
+            ->setDescriptionForEvent(function (string $eventName): string {
+                return match ($eventName) {
+                    'created' => __('referral.audit.created'),
+                    'updated' => $this->getUpdateDescription(),
+                    'deleted' => __('referral.audit.deleted'),
+                    default => "Referral {$eventName}",
+                };
+            });
+    }
+
+    private function getUpdateDescription(): string
+    {
+        if ($this->wasChanged('status')) {
+            return match ($this->status) {
+                ReferralStatus::Triaging => __('referral.audit.triage_started'),
+                ReferralStatus::Accepted => __('referral.audit.triage_accepted'),
+                ReferralStatus::Rejected => __('referral.audit.triage_rejected'),
+                ReferralStatus::Cancelled => __('referral.audit.cancelled'),
+                default => __('referral.audit.status_changed', ['status' => $this->status->label()]),
+            };
+        }
+
+        return __('referral.audit.updated');
     }
 }
