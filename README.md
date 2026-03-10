@@ -63,13 +63,6 @@ sudo ./get-docker.sh
 ```bash
 git clone git@github.com:Jeyhun023/referral-service.git
 cd referral-service
-cp .env.example .env
-```
-
-Set a service token in `.env`:
-
-```
-API_SERVICE_TOKEN=your-secret-token-here
 ```
 
 ### 2. Build and start containers
@@ -79,6 +72,12 @@ make init
 ```
 
 This builds and starts all containers: PHP-FPM, Nginx, MySQL, and the Queue Worker.
+
+Set a service token in `.env`:
+
+```
+API_SERVICE_TOKEN=your-secret-token-here
+```
 
 ### 3. Run migrations
 
