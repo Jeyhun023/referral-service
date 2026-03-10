@@ -6,13 +6,10 @@ A backend API service for patient referral intake and triage, built with Laravel
 
 - [Architecture Overview](#architecture-overview)
 - [Referral Lifecycle](#referral-lifecycle)
-- [Tech Stack](#tech-stack)
 - [Prerequisites](#prerequisites)
 - [Local Setup](#local-setup)
 - [Running the Application](#running-the-application)
 - [Running Tests](#running-tests)
-- [API Documentation](#api-documentation)
-- [Design Decisions](#design-decisions)
 
 ## Architecture Overview
 
@@ -50,6 +47,8 @@ triaging → cancelled
 - **Docker** — containerized development environment
 - **PHPUnit** — testing
 
+## Local Setup
+
 ### For Windows (WSL)
 
 ```bash
@@ -58,8 +57,6 @@ curl -fsSL https://get.docker.com -o get-docker.sh
 chmod +x get-docker.sh
 sudo ./get-docker.sh
 ```
-
-## Local Setup
 
 ### 1. Clone and configure
 
