@@ -35,6 +35,22 @@ services:
     networks:
       - referral-net
 
+  queue:
+    container_name: referral-queue
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+    volumes:
+      - .:/var/www/referral
+    working_dir: /var/www/referral
+    entrypoint: []
+    command: php artisan queue:work --sleep=3 --tries=3 --backoff=10,60,300 --max-time=3600
+    depends_on:
+      - mysql
+    restart: unless-stopped
+    networks:
+      - referral-net
+
   mysql:
     container_name: referral-mysql
     image: mysql:8.0

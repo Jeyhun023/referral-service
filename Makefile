@@ -42,5 +42,8 @@ artisan: ## Run the php artisan command
 composer: ## Run the composer command
 	docker exec -u ${USER_ID} ${CONTAINER_PHP} composer $(filter-out $@,$(MAKECMDGOALS))
 
+test: ## Run PHPUnit tests
+	docker exec -u ${USER_ID} ${CONTAINER_PHP} php artisan test $(filter-out $@,$(MAKECMDGOALS))
+
 %: ## Allow arguments
 	@:

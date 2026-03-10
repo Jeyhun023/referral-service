@@ -13,7 +13,6 @@ fi
 # Run php commands
 if ! grep -qE '^APP_KEY=.+$' .env; then
     php artisan key:generate
-    php artisan reverb:install
     php artisan optimize:clear
 fi
 
